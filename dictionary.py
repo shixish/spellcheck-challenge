@@ -20,7 +20,7 @@ class Spellcheck: #Node definition
             if first_letter in self.children:
                 self.children[first_letter].add_word(word[1:])
             else:
-                self.children[first_letter] = Node(word[1:])
+                self.children[first_letter] = Spellcheck(word[1:])
 
     #check a word against the dictionary, return corrected string
     def check_word(self, word):
@@ -62,8 +62,7 @@ class Spellcheck: #Node definition
                 
 
 #load in the dictionary words:
-path = "./dictionary.txt"
-f = open(path, 'r')
+f = open(config.dictionary_path, 'r')
 checker = Spellcheck()
 
 for line in f:
