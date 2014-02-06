@@ -5,9 +5,11 @@ from spellcheck import Spellcheck
 
 f = open(config.dictionary_path, 'r')
 tests = []
+checker = Spellcheck()
 
 for line in f:
     line = line.strip()#strip off any newline characters or spaces
+    checker.add_word(line)#add the word to the spellchecker
     for n in range(5):#make 5 tests per dictionary word
         word = ""
         for l in line:#each letter
@@ -23,4 +25,18 @@ for line in f:
         tests.append(word);
 f.close()
 
-#print tests
+results_good = 0
+results_bad = 0
+results_total = float(len(tests))
+#test each of the generated strings:
+for test in tests:
+    output = checker.check_word(test)
+    print "Test: %s Result: %s"%(test, output)
+    if output == "NO SUGGESTION":
+        results_bad += 1
+    else:
+        results_good += 1
+
+print "Results:"
+print "\tGood: %d (%.1f%%)"%(results_good, 100*results_good/results_total)
+print "\tBad: %d (%.1f%%)"%(results_bad, 100*results_bad/results_total)

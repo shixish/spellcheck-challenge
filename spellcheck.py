@@ -8,9 +8,6 @@ class Spellcheck: #Node definition
         self.children = {}#max children is 26 (one for each letter)
         if word: #add the word when creating the new node:
             self.add_word(word)
-            self.root = False
-        else: #only the root node should use this
-            self.root = True #helpful in formatting output
 
 
     #add a word to the dictionary, construct the tree structure
@@ -24,6 +21,13 @@ class Spellcheck: #Node definition
 
     #check a word against the dictionary, return corrected string
     def check_word(self, word):
+        output = self.traverse(word);
+        if output:
+            return output
+        else:
+            return "NO SUGGESTION"
+
+    def traverse(self, word):
         #print word
         if len(word) > 0:
             first_letter = word[0].lower()
@@ -45,32 +49,24 @@ class Spellcheck: #Node definition
                         return letter
 
                     #do the normal check...
-                    test = self.children[letter].check_word(remaining_letters)
+                    test = self.children[letter].traverse(remaining_letters)
                     if (test):
                         #the remaining_letters are fine.
                         return letter + test
 
                     #check for repeats...
-                    test = self.check_word(remaining_letters)
+                    test = self.traverse(remaining_letters)
                     if (test):
                         #don't add the current letter on, because it's been repeated
                         return test;
-
-        if (self.root):
-            #if all of the tests are exhausted, the root node should return this instead of None:
-            return "NO SUGGESTION"
                 
 
 #load in the dictionary words:
 f = open(config.dictionary_path, 'r')
-checker = Spellcheck()
+##checker = Spellcheck()
 
-for line in f:
-    checker.add_word(line.strip())#strip off any newline characters or spaces
-f.close()
+##for line in f:
+##    checker.add_word(line.strip())#strip off any newline characters or spaces
+##f.close()
 
-tests = ["twwuutch", "TwiTcH", "CUNsperrICY"]
-for test in tests:
-    output = checker.check_word(test)
-    print "Test: %s Result: %s"%(test, output)
-
+print "hmm."
