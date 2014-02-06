@@ -59,14 +59,3 @@ class Spellcheck: #Node definition
                     if (test):
                         #don't add the current letter on, because it's been repeated
                         return test;
-                
-
-#load in the dictionary words:
-f = open(config.dictionary_path, 'r')
-##checker = Spellcheck()
-
-##for line in f:
-##    checker.add_word(line.strip())#strip off any newline characters or spaces
-##f.close()
-
-print "hmm."

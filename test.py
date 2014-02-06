@@ -10,7 +10,8 @@ checker = Spellcheck()
 for line in f:
     line = line.strip()#strip off any newline characters or spaces
     checker.add_word(line)#add the word to the spellchecker
-    for n in range(5):#make 5 tests per dictionary word
+    tests.append(line);#first test the correctly spelled word
+    for n in range(5):#make 5 additional tests per dictionary word
         word = ""
         for l in line:#each letter
             if l in Spellcheck.vowels:#randomize all vowels
